@@ -5,7 +5,7 @@
         "google api",
         "google analitics",
 		"google api sdk"
-    ],
+    ], 
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
     "authors": [
