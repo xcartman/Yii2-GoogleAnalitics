@@ -1,7 +1,7 @@
 {
     "name": "xcartman/yii2-google-analitics",
     "description": "The google analitics extension for the Yii framework",
-    "keywords": [
+    "keywords": [ 
         "google api",
         "google analitics",
 		"google api sdk"
