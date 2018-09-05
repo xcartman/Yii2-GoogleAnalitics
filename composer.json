@@ -1,5 +1,5 @@
 {
-    "name": "eugene_chorny/yii2-google-analitics",
+    "name": "xcartman/yii2-google-analitics",
     "description": "The google analitics extension for the Yii framework",
     "keywords": [
         "google api",
@@ -20,9 +20,16 @@
             "url": "http://pear.php.net"
         }
     ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0",
+        "google/apiclient": "~2.0"
+    },
+	"require-dev": {
+        "phpunit/phpunit": "~4.0",
+	},
     "autoload": {
         "psr-4": {
-            "eugene_chorny\\yii2-google-analitics\\": "src"
+            "xcartman\\yii2-google-analitics\\": "src"
         }
     }
 }
