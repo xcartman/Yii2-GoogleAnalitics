@@ -29,7 +29,7 @@
 	},
     "autoload": {
         "psr-4": {
-            "xcartman\\yii2-google-analitics\\": "src"
+            "xcartman\\ga\\": "src"
         }
     }
 }

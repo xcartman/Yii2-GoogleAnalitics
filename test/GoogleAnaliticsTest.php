@@ -1,5 +1,5 @@
 <?php
-namespace common\tests\unit\components;
+namespace test;
 
 use Yii;
 

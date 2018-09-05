@@ -1,5 +1,5 @@
 <?php
-namespace common\components;
+namespace xcartman\ga;
 
 use Yii;
 use yii\base\Component;
