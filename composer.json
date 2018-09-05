@@ -25,9 +25,6 @@
         "yiisoft/yii2": "~2.0.0",
         "google/apiclient": "~2.0"
     },
-	"require-dev": {
-        "phpunit/phpunit": "~4.0"
-	},
     "autoload": {
         "psr-4": {
             "xcartman\\yii2-google-analitics\\": "src"
