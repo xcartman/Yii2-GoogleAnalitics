@@ -1,0 +1,26 @@
+{
+    "name": "eugene_chorny/yii2-google-analitics",
+    "description": "The google analitics extension for the Yii framework",
+    "keywords": [
+        "google api",
+        "google analitics",
+		"google api sdk"
+    ],
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Eugene Chorny",
+            "email": "lfx@list.ru"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0",
+        "google/apiclient:": "~2.0"
+    }
+    "autoload": {
+        "psr-4": {
+            "eugene_chorny\\yii2-google-analitics\\": "src"
+        }
+    }
+}
