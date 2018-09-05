@@ -20,6 +20,7 @@
             "url": "http://pear.php.net"
         }
     ],
+	"minimum-stability":"dev",
     "require": {
         "yiisoft/yii2": "~2.0.0",
         "google/apiclient": "~2.0"
