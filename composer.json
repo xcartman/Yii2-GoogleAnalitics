@@ -17,7 +17,7 @@
     "require": {
         "yiisoft/yii2": "~2.0.0",
         "google/apiclient:": "~2.0"
-    }
+    },
     "autoload": {
         "psr-4": {
             "eugene_chorny\\yii2-google-analitics\\": "src"
