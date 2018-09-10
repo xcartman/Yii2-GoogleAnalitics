@@ -104,7 +104,8 @@ class GoogleAnalitics extends Component {
      *
      * @return self
      */
-    public function getBegin(): self {
+    public function getBegin(): self 
+	{
         $exclude = ['client','privateKey','viewId'];
 
         foreach ($this as $key => $value) {
@@ -248,7 +249,7 @@ class GoogleAnalitics extends Component {
         string $operator = "EXACT",
         string $segmentName = null
     ): self 
-    {
+	{
 
         if (empty($segmentName)) {
             $segmentName = $dimensionFilterExpression;
