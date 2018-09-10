@@ -34,15 +34,15 @@ use Google_Service_AnalyticsReporting_Segment;
  * quotes limit check it or u will be banned
  * @link https://developers.google.com/analytics/devguides/config/mgmt/v3/limits-quotas
  * 
- * @property Google_Service_AnalyticsReporting|null 	$client
- * @property string|null 								$privateKey
- * @property string|null 								$viewId
- * @property array|null 								$dateRanges
- * @property array|null 								$metrics
- * @property array|null 								$segments
- * @property array|null 								$dimensions
- * @property array|null 								$response
- * @property object|null 								$request
+ * @property Google_Service_AnalyticsReporting|null $client
+ * @property string|null $privateKey
+ * @property string|null $viewId
+ * @property array|null  $dateRanges
+ * @property array|null  $metrics
+ * @property array|null  $segments
+ * @property array|null  $dimensions
+ * @property array|null  $response
+ * @property object|null $request
  */
 
 class GoogleAnalitics extends Component {
