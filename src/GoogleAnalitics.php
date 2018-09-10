@@ -94,8 +94,7 @@ class GoogleAnalitics extends Component {
      */
     public $request = null;
 
-    public function __construct($config = [])
-	{
+    public function __construct($config = []){
         parent::__construct($config);
         self::login();
     }
@@ -104,8 +103,7 @@ class GoogleAnalitics extends Component {
      *
      * @return self
      */
-    public function getBegin(): self 
-	{
+    public function getBegin(): self {
         $exclude = ['client','privateKey','viewId'];
 
         foreach ($this as $key => $value) {
@@ -119,8 +117,7 @@ class GoogleAnalitics extends Component {
      * Returns the number of reports
      * @return int
      */
-    public function getReporstCount(): integer 
-	{
+    public function getReporstCount(): integer {
         return sizeof($this->response) ?? 0;
     }
 
@@ -128,15 +125,13 @@ class GoogleAnalitics extends Component {
      * Count demensions
      * @return int
      */
-    public function getStep(): int 
-	{
+    public function getStep(): int {
         return sizeof($this->dimensions) ?? 0;
     }
     /**
      * @return void 
      */
-    private function login(): void 
-	{
+    private function login(): void {
         $KEY_FILE_LOCATION = getcwd() . '/'.$this->privateKey;
         $client = new Google_Client();
         $client->setApplicationName("Darcmetter Analytics Reporting");
@@ -148,8 +143,7 @@ class GoogleAnalitics extends Component {
      * Makes queries to statistics
      * @return self
      */
-    public function request(): self 
-	{
+    public function request(): self {
         $request = new Google_Service_AnalyticsReporting_ReportRequest();
         $request->setViewId((string)$this->viewId);
         
@@ -184,8 +178,7 @@ class GoogleAnalitics extends Component {
      *
      * @return self
      */
-    public function dimension(string $expression): self 
-	{
+    public function dimension(string $expression): self {
         $dimension = new Google_Service_AnalyticsReporting_Dimension();
         $dimension->setName($expression);
         $this->dimensions[] = $dimension;
@@ -200,8 +193,7 @@ class GoogleAnalitics extends Component {
      *
      * @return self
      */
-    public function metric(string $expression, string $metricName = null): self 
-	{      
+    public function metric(string $expression, string $metricName = null): self {      
         if (empty($metricName)) {
             $metricName = $expression;
         }
@@ -224,8 +216,7 @@ class GoogleAnalitics extends Component {
      *
      * @return self
      */
-    public function dateRange(string $from = "7daysAgo", string $to = "today"): self 
-	{
+    public function dateRange(string $from = "7daysAgo", string $to = "today"): self {
         $dateRanges = new Google_Service_AnalyticsReporting_DateRange();
         $dateRanges->setStartDate($from);
         $dateRanges->setEndDate($to);
@@ -248,8 +239,7 @@ class GoogleAnalitics extends Component {
         string $dimensionFilterExpression,
         string $operator = "EXACT",
         string $segmentName = null
-    ): self 
-	{
+    ): self {
 
         if (empty($segmentName)) {
             $segmentName = $dimensionFilterExpression;
@@ -309,8 +299,7 @@ class GoogleAnalitics extends Component {
      * 
      * @return array
      */
-    private function metricsValues(array $metrics, array $metricHeaders): array 
-	{
+    private function metricsValues(array $metrics, array $metricHeaders): array {
         $values = array();
         for ($i = 0; $i < count($metrics); $i++) {
             $mvalues = $metrics[$i]->getValues();
@@ -327,8 +316,7 @@ class GoogleAnalitics extends Component {
      *
      * @return array
      */
-    public function all(): array 
-	{
+    public function all(): array {
         $size = $this->reporstCount;
         $reports = array();
         for($i = 0; $i < $size; $i++) {
@@ -344,8 +332,7 @@ class GoogleAnalitics extends Component {
      *
      * @return array
      */
-    public function one(int $report = 0): array 
-	{
+    public function one(int $report = 0): array {
         $values = array();
 
         $header = $this->response->reports[$report]->getColumnHeader();
@@ -379,8 +366,7 @@ class GoogleAnalitics extends Component {
     /**
      * Displays a response from the analitics
      */
-    public function printReports(): void 
-	{
+    public function printReports(): void {
         $reports = $this->response;
         for ( $reportIndex = 0; $reportIndex < count( $reports ); $reportIndex++ ) {
             $report = $reports[ $reportIndex ];
