@@ -1,4 +1,10 @@
 <?php
+/**
+ * @link https://github.com/xcartman/Yii2-GoogleAnalitics
+ * @copyright Copyright (c) 2018 Chorniy Evgeny
+ * @license http://opensource.org/licenses/BSD-3-Clause
+ */
+
 namespace xcartman\ga;
 
 use Yii;
@@ -21,13 +27,22 @@ use Google_Service_AnalyticsReporting_DynamicSegment;
 use Google_Service_AnalyticsReporting_Segment;
 
 /**
- * Class GoogleAnalitics
- * @see https://developers.google.com/analytics/devguides/reporting/core/v4/quickstart/service-php
- * @see https://ga-dev-tools.appspot.com/account-explorer/
- * @see https://developers.google.com/analytics/devguides/reporting/core/dimsmets
+ * Class GoogleAnalitics implements a link between your application and Google Analytics api
+ * @link https://developers.google.com/analytics/devguides/reporting/core/v4/quickstart/service-php
+ * @link https://ga-dev-tools.appspot.com/account-explorer/
+ * @link https://developers.google.com/analytics/devguides/reporting/core/dimsmets
  * quotes limit check it or u will be banned
- * @see https://developers.google.com/analytics/devguides/config/mgmt/v3/limits-quotas
- * @package common\components
+ * @link https://developers.google.com/analytics/devguides/config/mgmt/v3/limits-quotas
+ * 
+ * @property Google_Service_AnalyticsReporting|null 	$client
+ * @property string|null 								$privateKey
+ * @property string|null 								$viewId
+ * @property array|null 								$dateRanges
+ * @property array|null 								$metrics
+ * @property array|null 								$segments
+ * @property array|null 								$dimensions
+ * @property array|null 								$response
+ * @property object|null 								$request
  */
 
 class GoogleAnalitics extends Component {
@@ -43,7 +58,7 @@ class GoogleAnalitics extends Component {
     public $privateKey = null;
     /**
      * $viewId from where get data
-     * @see https://ga-dev-tools.appspot.com/account-explorer/
+     * @link https://ga-dev-tools.appspot.com/account-explorer/
      * @var string|null
      */
     public $viewId = null;
@@ -107,11 +122,11 @@ class GoogleAnalitics extends Component {
     }
 
     /**
-     * getStep - count demensions
+     * Count demensions
      * @return int
      */
     public function getStep(): int {
-        return sizeof($this->dimensions);
+        return sizeof($this->dimensions) ?? 0;
     }
     /**
      * @return void 
@@ -125,7 +140,7 @@ class GoogleAnalitics extends Component {
         $this->client = new Google_Service_AnalyticsReporting($client);      
     }
     /**
-     * request - Makes queries to statistics
+     * Makes queries to statistics
      * @return self
      */
     public function request(): self {
@@ -158,12 +173,12 @@ class GoogleAnalitics extends Component {
     }
     /**
      * dimension - Adds dimensions to get data from them
-     * @see https://developers.google.com/analytics/devguides/reporting/core/dimsmets
-     * @param String $expression
+     * @link https://developers.google.com/analytics/devguides/reporting/core/dimsmets
+     * @param string $expression
      *
      * @return self
      */
-    public function dimension(String $expression): self {
+    public function dimension(string $expression): self {
         $dimension = new Google_Service_AnalyticsReporting_Dimension();
         $dimension->setName($expression);
         $this->dimensions[] = $dimension;
@@ -171,14 +186,14 @@ class GoogleAnalitics extends Component {
         return $this;
     }
     /**
-     * metric - Adds metrics to get data from them
-     * @see https://developers.google.com/analytics/devguides/reporting/core/dimsmets
-     * @param String $expression 
-     * @param String $metricName     
+     * Adds metrics to get data from them
+     * @link https://developers.google.com/analytics/devguides/reporting/core/dimsmets
+     * @param string $expression 
+     * @param string $metricName     
      *
      * @return self
      */
-    public function metric(String $expression, String $metricName = null): self {      
+    public function metric(string $expression, string $metricName = null): self {      
         if (empty($metricName)){
             $metricName = $expression;
         }
@@ -192,16 +207,16 @@ class GoogleAnalitics extends Component {
         return $this;
     }
     /**
-     * dateRange - Adds a date range to the query 
+     * Adds a date range to the query 
      * 
-     * !important default by google is {"startDate": "7daysAgo", "endDate": "yesterday"}.
+     * important default by google is {"startDate": "7daysAgo", "endDate": "yesterday"}.
      *
      * @param string $from 
      * @param string $to  
      *
      * @return self
      */
-    public function dateRange(String $from = "7daysAgo", String $to = "today"): self {
+    public function dateRange(string $from = "7daysAgo", string $to = "today"): self {
         $dateRanges = new Google_Service_AnalyticsReporting_DateRange();
         $dateRanges->setStartDate($from);
         $dateRanges->setEndDate($to);
@@ -211,19 +226,19 @@ class GoogleAnalitics extends Component {
     }
 
     /**
-     * segment - create simple segment filter 
-     * @see https://developers.google.com/analytics/devguides/reporting/core/dimsmets               
-     * @param String $dimension                 
-     * @param String $dimensionFilterExpression
-     * @param String $segmentName
+     * Create simple segment filter 
+     * @link https://developers.google.com/analytics/devguides/reporting/core/dimsmets               
+     * @param string $dimension                 
+     * @param string $dimensionFilterExpression
+     * @param string $segmentName
      *
      * @return Google_Service_AnalyticsReporting_Segment 
      */
     function segment(
-        String $dimension, 
-        String $dimensionFilterExpression,
-        String $operator = "EXACT",
-        String $segmentName = null
+        string $dimension, 
+        string $dimensionFilterExpression,
+        string $operator = "EXACT",
+        string $segmentName = null
     ): self 
     {
 
@@ -233,12 +248,12 @@ class GoogleAnalitics extends Component {
         // Create Dimension Filter.
         $dimensionFilter = new Google_Service_AnalyticsReporting_SegmentDimensionFilter();
         /**
-         * @see https://developers.google.com/analytics/devguides/reporting/core/dimsmets 
+         * @link https://developers.google.com/analytics/devguides/reporting/core/dimsmets 
          */
         $dimensionFilter->setDimensionName($dimension);
        
         /**
-         * @see https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet#Operator
+         * @link https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/reports/batchGet#Operator
          */
         $dimensionFilter->setOperator($operator);
 
@@ -278,15 +293,15 @@ class GoogleAnalitics extends Component {
         return $this;
     }
     /**
-     * metricsValues - Gets values ​​from the metric
+     * Gets values ​​from the metric
      *
      * @param array $metrics       
      * @param array $metricHeaders 
      * 
      * @return array
      */
-    private function metricsValues($metrics, $metricHeaders){
-        $values = Array();
+    private function metricsValues(array $metrics, array $metricHeaders): array {
+        $values = array();
         for ($i = 0; $i < count($metrics); $i++) {
             $mvalues = $metrics[$i]->getValues();
             for ($j = 0; $j < count($mvalues); $j++) {
@@ -298,13 +313,13 @@ class GoogleAnalitics extends Component {
     }
 
     /**
-     * Gets all readings from analytics
+     * Gets all reports readings from analytics
      *
      * @return array
      */
-    public function all(): Array {
+    public function all(): array {
         $size = $this->reporstCount;
-        $reports = Array();
+        $reports = array();
         for($i = 0; $i < $size; $i++){
             $reports[] = $this->getReport($i);
         }
@@ -318,8 +333,8 @@ class GoogleAnalitics extends Component {
      *
      * @return array
      */
-    public function one(int $report = 0){
-        $values = Array();
+    public function one(int $report = 0): array {
+        $values = array();
 
         $header = $this->response->reports[$report]->getColumnHeader();
         $dimensionHeaders = $header->getDimensions();
@@ -350,9 +365,9 @@ class GoogleAnalitics extends Component {
         return $values;    
     }
     /**
-     * printReports - displays a response from the analyst
+     * Displays a response from the analitics
      */
-    public function printReports() {
+    public function printReports(): void {
         $reports = $this->response;
         for ( $reportIndex = 0; $reportIndex < count( $reports ); $reportIndex++ ) {
             $report = $reports[ $reportIndex ];
@@ -380,88 +395,3 @@ class GoogleAnalitics extends Component {
         }
     }
 }
-
-/**
- * HOW TO use this
- *
- * MAKE Simple request and display it
- * 
-    Yii::$app->ga->begin->dateRange('7daysAgo', 'today')
-            ->metric('ga:uniqueEvents')
-            ->dimension('ga:eventCategory')
-            ->dimension('ga:eventAction')
-            ->dimension('ga:eventLabel')
-            ->request()->printReports();
- 
-***********************************************************
-*how to use in the loop it is necessary to make a clone of the class instance
-**************************************************************
-
-for($i=0;$i<5;$i++){
-    Yii::$app->ga->begin <-- use begin 
-}
-
-for($i=0;$i<5;$i++){
-    $googleAnalitics = clone Yii::$app->ga; <-- without begin 
-
-    do something
-
-    //free memory
-    unset($googleAnalitics);
-}
-
-
-
-for($i=0;$i<5;$i++){
-    $googleAnalitics = clone Yii::$app->ga;
-
-    do something
-
-    //free memory
-    unset($googleAnalitics);
-}
- 
- ***********************************************************
- * MAKE Simple request and converto to array and display it
- * $report = Yii::$app->ga->begin->dateRange('7daysAgo', 'today')
-            ->metric('ga:uniqueEvents')
-            ->dimension('ga:eventCategory')
-            ->dimension('ga:eventAction')
-            ->dimension('ga:eventLabel')
-            ->request()->one($index = 0);
-
-    print_r($report);
-
-    output:
-    [ga:eventCategory] => Array
-        (
-            [ga:eventAction] => Array
-                (
-                    [ga:eventLabel] => Array
-                        (
-                                [ga:uniqueEvents] => 1 <---- YEs it metric values
-                        )
-
-                )
-        )
-
-    *****************************************************
-    MAKE Sigment or Filter by data request
-    @see https://developers.google.com/analytics/devguides/reporting/core/dimsmets
-
-    $Firm = \common\models\Firm::findOne(7);
-
-    $values = Yii::$app->ga->begin->dateRange('70daysAgo', 'today')
-        ->metric('ga:uniqueEvents')
-        ->dimension('ga:segment')
-        ->segment('ga:eventLabel', $Firm->name)
-        ->request()->getReport();
-
-    print_r($values[$Firm->name]);
-
-    OUTPUT:
-    Array
-    (
-        [ga:uniqueEvents] => 5
-    )       
- */

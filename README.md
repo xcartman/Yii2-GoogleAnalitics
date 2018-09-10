@@ -1,4 +1,4 @@
-# Yii2 GoogleAnalitics graber
+# Yii2 GoogleAnalitics api grabber
 
 This extension provides [google-analitics](https://github.com/xcartman/Yii2-GoogleAnalitics) integration for the Yii framework.
 
